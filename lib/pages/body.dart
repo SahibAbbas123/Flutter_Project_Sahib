@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:foodapp/pages/product_details.dart';
 
 class BodyPart extends StatelessWidget {
   BodyPart({super.key});
@@ -50,7 +51,7 @@ class BodyPart extends StatelessWidget {
                           child: Container(
                             width: 120,
                             height: 120,
-                            color: Colors.green,
+                            color: const Color.fromARGB(255, 212, 212, 212),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -126,53 +127,69 @@ class BodyPart extends StatelessWidget {
             ),
             itemCount: 12,
             itemBuilder: (context, index) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: Colors.green,
+                return InkWell(
+                onTap: () {
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductDetails(
+                    imageUrl: localImgUrlList[index],
+                    rating: "4.5",
+                    productName: "Product $index",
+                    productDescription: "Description for Product $index",
+                    ),
+                  ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 212, 212, 212),
                   borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Stack(
+                  ),
+                  child: Stack(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                      SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: Image.asset(localImgUrlList[index]),
+                      ),
+                      const SizedBox(height: 5),
+                      Text("Product $index"),
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Image.asset(localImgUrlList[index]),
-                          ),
-                          const SizedBox(height: 5),
-                          Text("Product $index"),
-                          const SizedBox(height: 5),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.star, color: Colors.yellow, size: 16),
-                              const SizedBox(width: 4),
-                              Text("4.5"),
-                            ],
-                          ),
-                          const SizedBox(height: 5),
-                          Text("\$20.00"),
+                        Icon(Icons.star,
+                          color: Colors.yellow, size: 16),
+                        const SizedBox(width: 4),
+                        Text("4.5"),
                         ],
                       ),
+                      const SizedBox(height: 5),
+                      Text("\$20.00"),
+                      ],
+                    ),
                     ),
                     Positioned(
-                      bottom: 8,
-                      right: 8,
-                      child: IconButton(
-                        icon: Icon(Icons.add_circle, color: Colors.white),
-                        onPressed: () {
-                          print("Plus button pressed for Product $index");
-                        },
-                      ),
+                    bottom: 8,
+                    right: 8,
+                    child: IconButton(
+                      icon: Icon(Icons.add_circle, color: Colors.white),
+                      onPressed: () {
+                      print("Plus button pressed for Product $index");
+                      },
+                    ),
                     ),
                   ],
+                  ),
                 ),
-              );
+                );
             },
           ),
         ),
